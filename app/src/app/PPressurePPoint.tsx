@@ -15,6 +15,7 @@ export default function PPressurePPoint() {
   const [sessionSettings, updateSessionSettings] = useState(initialSettings);
   const [items, updateItems] = useState<ItemType[]>([]);
   const [challengeRevealed, updateChallengeRevealed] = useState(false);
+  console.log({ initialSettings });
   return (
     <div
       style={{
