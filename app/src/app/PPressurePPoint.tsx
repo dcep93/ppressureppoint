@@ -12,8 +12,16 @@ export default function PPressurePPoint() {
         width: "100vW",
         overflow: "scroll",
         backgroundColor: "grey",
+        fontSize: "x-large",
       }}
     >
+      <style>
+        {`
+        input,option,select {
+          font-size: large;
+        }
+        `}
+      </style>
       <div
         style={{
           display: "flex",
