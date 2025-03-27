@@ -12,6 +12,7 @@ export default function PPressurePPoint() {
   const [reveal, updateReveal] = useState(0);
   const [sessionSettings, updateSessionSettings] = useState(getHashSettings());
   const [items, updateItems] = useState<ItemType[]>([]);
+  const [challengeRevealed, updateChallengeRevealed] = useState(true);
   return (
     <div
       style={{
@@ -57,13 +58,16 @@ export default function PPressurePPoint() {
                 .then(() => firstRef.current?.focus())
                 .then(() => updateReveal(Date.now() - DATE_OFFSET))
                 .then(() => updateItems([]))
+                .then(() => updateChallengeRevealed(false))
             }
+            triggerTimer={() => updateChallengeRevealed(true)}
           />
           <Items
             firstRef={firstRef}
             reveal={reveal}
             items={items}
             updateItems={updateItems}
+            challenge={!challengeRevealed ? null : sessionSettings.challenge}
           />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { RefObject, useState } from "react";
-import { DATE_OFFSET } from "./utils";
+import { ChallengeType, DATE_OFFSET } from "./utils";
 
 export type ItemType = { c: string; t: number };
 
@@ -8,6 +8,7 @@ export default function Items(props: {
   firstRef: RefObject<HTMLInputElement | null>;
   items: ItemType[];
   updateItems: (_items: ItemType[]) => void;
+  challenge: ChallengeType;
 }) {
   function Item(pprops: { item: ItemType; i: number }) {
     const [c, updateC] = useState(pprops.item.c);
@@ -64,18 +65,21 @@ export default function Items(props: {
 
   return (
     <div>
-      {props.items
-        .concat({
-          c: "",
-          t: 0,
-        })
-        .map((item, i) => ({ item, i }))
-        .reverse()
-        .map(({ item, i }) => (
-          <div key={i}>
-            <Item item={item} i={i} />
-          </div>
-        ))}
+      <div>{JSON.stringify(props.challenge)}</div>
+      <div>
+        {props.items
+          .concat({
+            c: "",
+            t: 0,
+          })
+          .map((item, i) => ({ item, i }))
+          .reverse()
+          .map(({ item, i }) => (
+            <div key={i}>
+              <Item item={item} i={i} />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

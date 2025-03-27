@@ -11,13 +11,10 @@ export type SettingsType = {
   category: string | null;
   timer: number;
   audio: number;
-  challenge: { t: number; items: ItemType[] } | null;
+  challenge: ChallengeType;
 };
 
-export type AnswerType = {
-  value: string;
-  latency: number;
-};
+export type ChallengeType = ItemType[] | null;
 
 export const DATE_OFFSET = 1743112004047;
 

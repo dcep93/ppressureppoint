@@ -11,7 +11,10 @@ export default function ShareLink(props: {
       <a
         href={stateToHash({
           ...props.sessionSettings,
-          challenge: { t: props.reveal, items: props.items },
+          challenge: props.items.map((item) => ({
+            ...item,
+            t: item.t - props.reveal,
+          })),
         })}
       >
         share_link

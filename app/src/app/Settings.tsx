@@ -11,6 +11,7 @@ const BLACKOUT_DURATION_MS = 1000;
 
 export default function Settings(props: {
   triggerReveal: () => void;
+  triggerTimer: () => void;
   sessionSettings: SettingsType;
   updateSessionSettings: (_sessionSettings: SettingsType) => void;
 }) {
@@ -25,7 +26,7 @@ export default function Settings(props: {
 
   function setTimeoutHook() {
     Promise.resolve()
-      .then(() => setTimeout(trigger, props.sessionSettings.timer * 1000))
+      .then(() => setTimeout(triggerTimer, props.sessionSettings.timer * 1000))
       .then((createdTimeout) => updateTimeout(createdTimeout))
       .then(props.triggerReveal);
   }
@@ -36,10 +37,11 @@ export default function Settings(props: {
       .then(() => updateTimeout(null));
   }
 
-  function trigger() {
+  function triggerTimer() {
     playSound();
     updateBlackout(true);
     setTimeout(() => updateBlackout(false), BLACKOUT_DURATION_MS);
+    props.triggerTimer();
   }
 
   function Blackout() {
