@@ -18,7 +18,6 @@ export default function Settings(props: {
   updateSessionSettings: (_sessionSettings: SettingsType) => void;
 }) {
   const [domain, updateDomain] = useState(Domain.ANY);
-  const [categoryInput, updateCategoryInput] = useState("");
   const [timeout, updateTimeout] = useState<NodeJS.Timeout | null>(null);
   const [blackout, updateBlackout] = useState(false);
 
@@ -158,6 +157,7 @@ export default function Settings(props: {
   }
 
   function CategorySettings() {
+    const [categoryInput, updateCategoryInput] = useState("");
     return (
       <div>
         <div>
@@ -227,14 +227,6 @@ function enumArray<X>(enumType: { [k: string]: string | X }): X[] {
 }
 
 function randomFrom(possibleCategories: string[]): string {
-  console.log(
-    possibleCategories
-      .map((c) => ({
-        c,
-        s: Math.random() + (seenCategories.includes(c) ? 1 : 0),
-      }))
-      .sort((a, b) => a.s - b.s)
-  );
   const c = possibleCategories
     .map((c) => ({
       c,
