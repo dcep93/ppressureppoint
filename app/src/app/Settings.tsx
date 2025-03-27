@@ -1,18 +1,21 @@
 import { useState } from "react";
-import play_audio from "./play_audio";
+import useSound from "use-sound";
 import suggestions, { Domain } from "./suggestions";
+
+// @ts-ignore
+import beepMp3 from "./mp3/beep.mp3";
 
 const defaultSettings = {
   category: null,
   timer: 10,
-  audio: false,
+  audio: 0,
   challenge: null,
 };
 
 export type SettingsType = {
   category: string | null;
   timer: number;
-  audio: boolean;
+  audio: number;
   challenge: { hint: string; answers: AnswerType[] } | null;
 };
 
@@ -51,6 +54,8 @@ export default function Settings() {
   const [domain, updateDomain] = useState(Domain.ANY);
   const [categoryInput, updateCategoryInput] = useState("");
 
+  const [playSound] = useSound(beepMp3, { volume: sessionSettings.audio });
+
   function CategoryRevealer() {
     return (
       <button
@@ -83,23 +88,25 @@ export default function Settings() {
             <div style={{ width: "1em" }}></div>
             <div>
               <label>
-                audible_timer:{" "}
+                volume:{" "}
                 <input
-                  type="checkbox"
-                  checked={sessionSettings.audio}
-                  style={{ transform: "scale(1.5)" }}
+                  type="number"
+                  max={1}
+                  step={0.05}
+                  value={sessionSettings.audio}
                   onChange={(e) =>
-                    Promise.resolve()
-                      .then(() => e.target.checked || play_audio())
-                      .then(
-                        (success) =>
-                          success &&
+                    Promise.resolve(parseFloat(e.target.value)).then((audio) =>
+                      Promise.resolve()
+                        .then(() => playSound())
+                        .then(() =>
                           updateSessionSettings({
                             ...sessionSettings,
-                            audio: !e.target.checked,
+                            audio,
                           })
-                      )
+                        )
+                    )
                   }
+                  style={{ width: "3.5em" }}
                 />
               </label>
             </div>
