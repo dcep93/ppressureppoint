@@ -1,7 +1,7 @@
 import Instructions from "./Instructions";
-import Names from "./Names";
+import Items from "./Items";
 
-export default function NamesOfFame() {
+export default function PressurePoint() {
   return (
     <div
       style={{
@@ -19,7 +19,7 @@ export default function NamesOfFame() {
         }}
       >
         <Instructions />
-        <Names />
+        <Items />
       </div>
     </div>
   );

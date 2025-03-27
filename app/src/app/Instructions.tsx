@@ -1,7 +1,7 @@
 export default function Instructions() {
   return (
     <div style={{ maxWidth: "50em" }}>
-      <h1>Welcome to Names of Fame</h1>
+      <h1>Welcome to PressurePoint</h1>
       <ul>
         <li>How many famous people can you recall with a particular name?</li>
         <li>When you're ready, reveal the category.</li>
