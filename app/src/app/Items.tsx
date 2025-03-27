@@ -101,8 +101,9 @@ function ChallengeItem(props: { i: number; item: ItemType }) {
   if (props.item.c.includes("\\")) {
     const parts = props.item.c.split("\\");
     return (
-      <div>
+      <div style={{ display: "flex", alignItems: "center" }}>
         <span>#{props.i + 1}</span>
+        <span style={{ width: "1em" }}></span>
         <img
           onClick={() => alert(parts[0])}
           src={parts[1]}
