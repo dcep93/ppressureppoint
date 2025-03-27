@@ -88,14 +88,22 @@ export default function Items(props: {
           <h4>challenge!</h4>
           {props.challenge.map((c, i) => (
             <div key={i}>
-              <span style={{ display: "inline-block", width: "8em" }}>
-                #{i + 1} / {(c.t / 1000).toFixed(3)}
-              </span>
-              ☑ {c.c}
+              <ChallengeItem i={i} item={c} />
             </div>
           ))}
         </div>
       )}
     </div>
+  );
+}
+
+function ChallengeItem(props: { i: number; item: ItemType }) {
+  return (
+    <span>
+      <span style={{ display: "inline-block", width: "8em" }}>
+        #{props.i + 1} / {(props.item.t / 1000).toFixed(3)}
+      </span>
+      ☑ {props.item.c}
+    </span>
   );
 }
