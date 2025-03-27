@@ -1,3 +1,4 @@
+import { createRef } from "react";
 import Instructions from "./Instructions";
 import Items from "./Items";
 import recorded_sha from "./recorded_sha";
@@ -5,6 +6,7 @@ import Settings from "./Settings";
 
 export default function PPressurePPoint() {
   console.log(recorded_sha);
+  const firstRef = createRef<HTMLInputElement>();
   return (
     <div
       style={{
@@ -30,8 +32,8 @@ export default function PPressurePPoint() {
         }}
       >
         <Instructions />
-        <Settings />
-        <Items />
+        <Settings selectFirstRef={() => firstRef.current?.focus()} />
+        <Items firstRef={firstRef} />
       </div>
     </div>
   );

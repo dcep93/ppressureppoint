@@ -48,7 +48,7 @@ export function hashToState(hash: string): SettingsType {
   return { ...defaultSettings, ...parsed };
 }
 
-export default function Settings() {
+export default function Settings(props: { selectFirstRef: () => void }) {
   const [sessionSettings, updateSessionSettings] =
     useState<SettingsType>(defaultSettings);
   const [domain, updateDomain] = useState(Domain.ANY);
@@ -60,7 +60,11 @@ export default function Settings() {
   function CategoryRevealer() {
     return (
       <button
-        onClick={() => Promise.resolve().then(() => updateRevealed(true))}
+        onClick={() =>
+          Promise.resolve()
+            .then(() => updateRevealed(!revealed))
+            .then(props.selectFirstRef)
+        }
         disabled={!sessionSettings.category}
       >
         {!sessionSettings.category

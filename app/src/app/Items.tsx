@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { RefObject, useState } from "react";
 
 const startTime = Date.now();
 
 type ItemType = { c: string; t: number };
 
-export default function Items() {
+export default function Items(props: {
+  firstRef: RefObject<HTMLInputElement | null>;
+}) {
   const [items, updateItems] = useState<ItemType[]>([]);
 
-  function Item(props: { item: ItemType; i: number }) {
+  function Item(props: {
+    item: ItemType;
+    i: number;
+    firstRef: RefObject<HTMLInputElement | null>;
+  }) {
     const [c, updateC] = useState(props.item.c);
     return (
       <form
@@ -35,6 +41,7 @@ export default function Items() {
       >
         <input type="submit" value="☑" disabled={props.item.c === c} />
         <input
+          ref={props.firstRef}
           value={c}
           onChange={(e) => updateC(e.target.value)}
           autoFocus={props.item.t === 0}
@@ -66,7 +73,7 @@ export default function Items() {
         .reverse()
         .map(({ item, i }) => (
           <div key={i}>
-            <Item item={item} i={i} />
+            <Item item={item} i={i} firstRef={props.firstRef} />
           </div>
         ))}
     </div>
