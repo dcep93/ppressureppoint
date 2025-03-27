@@ -1,4 +1,5 @@
 import { useState } from "react";
+import play_audio from "./play_audio";
 import suggestions, { Domain } from "./suggestions";
 
 const defaultSettings = {
@@ -53,7 +54,7 @@ export default function Settings() {
   function CategoryRevealer() {
     return (
       <button
-        onSubmit={() => alert("button")}
+        onClick={() => alert("button")}
         disabled={!sessionSettings.category}
       >
         {sessionSettings.category || "no category"}
@@ -88,10 +89,16 @@ export default function Settings() {
                   checked={sessionSettings.audio}
                   style={{ transform: "scale(1.5)" }}
                   onChange={(e) =>
-                    updateSessionSettings({
-                      ...sessionSettings,
-                      audio: e.target.checked,
-                    })
+                    Promise.resolve()
+                      .then(() => e.target.checked || play_audio())
+                      .then(
+                        (success) =>
+                          success &&
+                          updateSessionSettings({
+                            ...sessionSettings,
+                            audio: !e.target.checked,
+                          })
+                      )
                   }
                 />
               </label>
