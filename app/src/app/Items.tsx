@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { createRef, RefObject, useState } from "react";
 
 const startTime = Date.now();
 
+type ItemType = { c: string; t: number; ref: RefObject<HTMLInputElement> };
+
+function setBackgroundColor(item: ItemType) {
+  item.ref.current.style.backgroundColor =
+    item.c === item.ref.current.value ? "" : "lightpink";
+}
+
 export default function Items() {
-  const [items, update] = useState<({ c: string; t: number } | null)[]>([]);
+  const [items, update] = useState<(ItemType | null)[]>([]);
+  items.forEach((item) => item?.ref.current && setBackgroundColor(item));
   return (
     <div>
       {items
@@ -19,7 +27,7 @@ export default function Items() {
                   .then(
                     () =>
                       new FormData(e.target as HTMLFormElement).get(
-                        "input"
+                        "item_input"
                       ) as string
                   )
                   .then((c) =>
@@ -27,26 +35,35 @@ export default function Items() {
                       ? null
                       : Promise.resolve(Date.now() - startTime).then((t) =>
                           update(
-                            i < items.length
+                            item !== null
                               ? items
-                                  .splice(i, 1, { t, c })
+                                  .splice(i, 1, { ...item, t, c })
                                   .slice(1)
                                   .concat(items)
-                              : items.concat({ t, c })
+                              : items.concat({
+                                  t,
+                                  c,
+                                  ref: createRef() as RefObject<HTMLInputElement>,
+                                })
                           )
                         )
                   )
               }
             >
               <input
-                name="input"
+                ref={item?.ref}
+                name="item_input"
                 autoFocus={j === 0}
-                style={{ width: "8em" }}
+                onChange={() => item?.ref && setBackgroundColor(item)}
+                style={{
+                  width: "8em",
+                }}
               />
               <div style={{ display: "inline-block", width: "8em" }}>
                 {item === null ? null : (
                   <div>
-                    <span>#{i + 1}</span>{" "}
+                    <span>#{i + 1}</span>
+                    {" / "}
                     <span>{(item.t / 1000).toFixed(3)}</span>
                   </div>
                 )}

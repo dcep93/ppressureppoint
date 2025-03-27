@@ -66,14 +66,14 @@ function SettingsHelper(props: {
                 .then(
                   () =>
                     new FormData(e.target as HTMLFormElement).get(
-                      "input"
+                      "settings_input"
                     ) as string
                 )
                 .then((c) => c && props.handleCategory(c))
             }
           >
             <div>
-              category: <input name="input" style={{ width: "6em" }} />
+              category: <input name="settings_input" style={{ width: "6em" }} />
             </div>
           </form>
         </div>
