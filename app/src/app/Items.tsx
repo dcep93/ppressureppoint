@@ -41,7 +41,7 @@ export default function Items(props: {
           ref={pprops.item.t === 0 ? props.firstRef : undefined}
           value={c}
           onChange={(e) => updateC(e.target.value)}
-          autoFocus={pprops.item.t === 0}
+          autoFocus={props.reveal !== 0 && pprops.item.t === 0}
           style={{
             width: "8em",
           }}
