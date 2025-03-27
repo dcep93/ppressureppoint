@@ -1,7 +1,9 @@
 export default function Settings() {
-  return (
-    <SettingsHelper settings={hashToState(window.location.hash.slice(1))} />
-  );
+  return <SettingsHelper settings={getSettings()} />;
+}
+
+export function getSettings(): SettingsType {
+  return hashToState(window.location.hash.slice(1));
 }
 
 function SettingsHelper(props: { settings: SettingsType }) {
@@ -34,6 +36,7 @@ export function hashToState(hash: string): SettingsType {
   try {
     parsed = JSON.parse(atob(hash));
   } catch (e) {
+    console.log("error caught", { e });
     console.error(e);
   }
   return Object.assign(defaultSettings, null, parsed as any);
