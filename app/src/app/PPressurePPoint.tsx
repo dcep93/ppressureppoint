@@ -4,7 +4,7 @@ import Items, { ItemType } from "./Items";
 import recorded_sha from "./recorded_sha";
 import Settings from "./Settings";
 import ShareLink from "./ShareLink";
-import { DATE_OFFSET, getHashSettings } from "./utils";
+import { getHashSettings } from "./utils";
 
 export default function PPressurePPoint() {
   console.log(recorded_sha);
@@ -57,7 +57,7 @@ export default function PPressurePPoint() {
             triggerReveal={() =>
               Promise.resolve()
                 .then(() => firstRef.current?.focus())
-                .then(() => updateReveal(Date.now() - DATE_OFFSET))
+                .then(() => updateReveal(Date.now()))
                 .then(() => updateItems([]))
                 .then(() => updateChallengeRevealed(false))
             }

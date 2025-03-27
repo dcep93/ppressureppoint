@@ -16,8 +16,6 @@ export type SettingsType = {
 
 export type ChallengeType = ItemType[] | null;
 
-export const DATE_OFFSET = 1743112004047;
-
 export function getHashSettings(): SettingsType {
   function hashToState(hash: string): SettingsType {
     if (!hash) {

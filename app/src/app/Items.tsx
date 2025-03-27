@@ -1,5 +1,5 @@
 import { RefObject, useState } from "react";
-import { ChallengeType, DATE_OFFSET } from "./utils";
+import { ChallengeType } from "./utils";
 
 export type ItemType = { c: string; t: number };
 
@@ -20,7 +20,7 @@ export default function Items(props: {
             .then(() =>
               !c
                 ? null
-                : Promise.resolve(Date.now() - DATE_OFFSET).then((t) =>
+                : Promise.resolve(Date.now()).then((t) =>
                     props.updateItems(
                       pprops.item.t === 0
                         ? props.items.concat({
@@ -41,7 +41,7 @@ export default function Items(props: {
           ref={pprops.item.t === 0 ? props.firstRef : undefined}
           value={c}
           onChange={(e) => updateC(e.target.value)}
-          autoFocus={props.reveal !== 0 && pprops.item.t === 0}
+          autoFocus={props.items.length > 0 && pprops.item.t === 0}
           style={{
             width: "8em",
           }}
