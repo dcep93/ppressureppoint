@@ -1,6 +1,6 @@
 export default function Instructions() {
   return (
-    <div style={{ maxWidth: "50em" }}>
+    <div>
       <h1>Welcome to PPressurePPoint</h1>
       <ul>
         <li>How many can you name?</li>

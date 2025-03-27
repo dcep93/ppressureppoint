@@ -3,6 +3,7 @@ import Instructions from "./Instructions";
 import Items, { ItemType } from "./Items";
 import recorded_sha from "./recorded_sha";
 import Settings from "./Settings";
+import ShareLink from "./ShareLink";
 
 export default function PPressurePPoint() {
   console.log(recorded_sha);
@@ -29,24 +30,33 @@ export default function PPressurePPoint() {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
+          flexDirection: "column",
         }}
       >
-        <Instructions />
-        <Settings
-          triggerReveal={() =>
-            Promise.resolve()
-              .then(() => firstRef.current?.focus())
-              .then(() => updateReveal(Date.now()))
-          }
-        />
-        <Items
-          firstRef={firstRef}
-          reveal={reveal}
-          items={items}
-          updateItems={updateItems}
-        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "35em",
+          }}
+        >
+          <Instructions />
+          <ShareLink />
+          <Settings
+            triggerReveal={() =>
+              Promise.resolve()
+                .then(() => firstRef.current?.focus())
+                .then(() => updateReveal(Date.now()))
+            }
+          />
+          <Items
+            firstRef={firstRef}
+            reveal={reveal}
+            items={items}
+            updateItems={updateItems}
+          />
+        </div>
       </div>
     </div>
   );

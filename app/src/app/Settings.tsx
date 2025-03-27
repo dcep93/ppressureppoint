@@ -195,7 +195,7 @@ export default function Settings(props: { triggerReveal: () => void }) {
   }
 
   return (
-    <div style={{ minWidth: "20em" }}>
+    <div>
       <div>
         <Blackout />
         <TimerSettings />
