@@ -1,6 +1,6 @@
 import { createRef, useState } from "react";
 import Instructions from "./Instructions";
-import Items from "./Items";
+import Items, { ItemType } from "./Items";
 import recorded_sha from "./recorded_sha";
 import Settings from "./Settings";
 
@@ -8,6 +8,7 @@ export default function PPressurePPoint() {
   console.log(recorded_sha);
   const firstRef = createRef<HTMLInputElement>();
   const [reveal, updateReveal] = useState(0);
+  const [items, updateItems] = useState<ItemType[]>([]);
   return (
     <div
       style={{
@@ -40,7 +41,12 @@ export default function PPressurePPoint() {
               .then(() => updateReveal(Date.now()))
           }
         />
-        <Items firstRef={firstRef} reveal={reveal} />
+        <Items
+          firstRef={firstRef}
+          reveal={reveal}
+          items={items}
+          updateItems={updateItems}
+        />
       </div>
     </div>
   );

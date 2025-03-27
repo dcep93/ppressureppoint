@@ -184,6 +184,11 @@ export default function Settings(props: { triggerReveal: () => void }) {
               ? "*reveal*"
               : sessionSettings.category}
           </button>
+          {!sessionSettings.category || timeout !== null ? null : (
+            <button onClick={() => updateTimeout(setTimeout(() => null))}>
+              *preview*
+            </button>
+          )}
         </div>
       </div>
     );

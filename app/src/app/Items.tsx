@@ -1,13 +1,13 @@
 import { RefObject, useState } from "react";
 
-type ItemType = { c: string; t: number };
+export type ItemType = { c: string; t: number };
 
 export default function Items(props: {
   reveal: number;
   firstRef: RefObject<HTMLInputElement | null>;
+  items: ItemType[];
+  updateItems: (_items: ItemType[]) => void;
 }) {
-  const [items, updateItems] = useState<ItemType[]>([]);
-
   function Item(pprops: { item: ItemType; i: number }) {
     const [c, updateC] = useState(pprops.item.c);
     return (
@@ -19,16 +19,16 @@ export default function Items(props: {
               !c
                 ? null
                 : Promise.resolve(Date.now()).then((t) =>
-                    updateItems(
+                    props.updateItems(
                       pprops.item.t === 0
-                        ? items.concat({
+                        ? props.items.concat({
                             t,
                             c,
                           })
-                        : items
+                        : props.items
                             .splice(pprops.i, 1, { ...pprops.item, t, c })
                             .slice(1)
-                            .concat(items)
+                            .concat(props.items)
                     )
                   )
             )
@@ -63,7 +63,7 @@ export default function Items(props: {
 
   return (
     <div>
-      {items
+      {props.items
         .concat({
           c: "",
           t: 0,
