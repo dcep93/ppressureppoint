@@ -1,10 +1,14 @@
 import { useState } from "react";
 import suggestions, { Domain } from "./suggestions";
 
+const sessionSettings: SettingsType = {
+  category: null,
+  timer: 0,
+  challenge: null,
+};
+
 export default function Settings() {
-  return (
-    <SettingsHelper settings={getSettings()} handleCategory={(c) => alert(c)} />
-  );
+  return <SettingsHelper handleCategory={(c) => alert(c)} />;
 }
 
 export type SettingsType = {
@@ -13,19 +17,39 @@ export type SettingsType = {
   challenge: { hint: string; answers: AnswerType[] } | null;
 };
 
+export type AnswerType = {
+  value: string;
+  latency: number;
+  hints: string[];
+};
+
 export function getSettings(): SettingsType {
   const s = hashToState(window.location.hash.slice(1));
-  return s;
+  return Object.assign({}, sessionSettings, s);
 }
 
-function SettingsHelper(props: {
-  settings: SettingsType;
-  handleCategory: (category: string) => void;
-}) {
+export function stateToHash(state: SettingsType): string {
+  return btoa(JSON.stringify(state));
+}
+
+export function hashToState(hash: string): SettingsType {
+  if (!hash) {
+    return sessionSettings;
+  }
+  var parsed = {};
+  try {
+    parsed = JSON.parse(atob(hash));
+  } catch (e) {
+    console.log("error caught", { e, hash });
+    console.error(e);
+  }
+  return Object.assign(sessionSettings, null, parsed as any);
+}
+
+function SettingsHelper(props: { handleCategory: (category: string) => void }) {
   const [domain, updateDomain] = useState(Domain.any);
   return (
     <div>
-      <div>{JSON.stringify(props.settings)}</div>
       <div>
         <div>
           <div>
@@ -80,35 +104,6 @@ function SettingsHelper(props: {
       </div>
     </div>
   );
-}
-
-export type AnswerType = {
-  value: string;
-  latency: number;
-  hints: string[];
-};
-
-export function stateToHash(state: SettingsType): string {
-  return btoa(JSON.stringify(state));
-}
-
-export function hashToState(hash: string): SettingsType {
-  const defaultSettings: SettingsType = {
-    category: null,
-    timer: 0,
-    challenge: null,
-  };
-  if (!hash) {
-    return defaultSettings;
-  }
-  var parsed = {};
-  try {
-    parsed = JSON.parse(atob(hash));
-  } catch (e) {
-    console.log("error caught", { e, hash });
-    console.error(e);
-  }
-  return Object.assign(defaultSettings, null, parsed as any);
 }
 
 function enumArray<X>(enumType: { [k: string]: string | X }): X[] {
