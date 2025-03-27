@@ -105,6 +105,7 @@ function ChallengeItem(props: { i: number; item: ItemType }) {
         <span>#{props.i + 1}</span>
         <span style={{ width: "1em" }}></span>
         <img
+          alt={parts[0]}
           onClick={() => alert(parts[0])}
           src={parts[1]}
           style={{ width: "16em", cursor: "pointer" }}
