@@ -2,26 +2,30 @@ import { useState } from "react";
 import useSound from "use-sound";
 import suggestions, { Domain } from "./suggestions";
 
-import { defaultSettings, SettingsType } from "./utils";
+import { SettingsType } from "./utils";
 
 // @ts-ignore
 import beepMp3 from "./mp3/beep.mp3";
 
 const BLACKOUT_DURATION_MS = 1000;
 
-export default function Settings(props: { triggerReveal: () => void }) {
-  const [sessionSettings, updateSessionSettings] =
-    useState<SettingsType>(defaultSettings);
+export default function Settings(props: {
+  triggerReveal: () => void;
+  sessionSettings: SettingsType;
+  updateSessionSettings: (_sessionSettings: SettingsType) => void;
+}) {
   const [domain, updateDomain] = useState(Domain.ANY);
   const [categoryInput, updateCategoryInput] = useState("");
   const [timeout, updateTimeout] = useState<NodeJS.Timeout | null>(null);
   const [blackout, updateBlackout] = useState(false);
 
-  const [playSound] = useSound(beepMp3, { volume: sessionSettings.audio });
+  const [playSound] = useSound(beepMp3, {
+    volume: props.sessionSettings.audio,
+  });
 
   function setTimeoutHook() {
     Promise.resolve()
-      .then(() => setTimeout(trigger, sessionSettings.timer * 1000))
+      .then(() => setTimeout(trigger, props.sessionSettings.timer * 1000))
       .then((createdTimeout) => updateTimeout(createdTimeout))
       .then(props.triggerReveal);
   }
@@ -63,10 +67,10 @@ export default function Settings(props: { triggerReveal: () => void }) {
             timer_seconds:{" "}
             <input
               type="number"
-              value={sessionSettings.timer}
+              value={props.sessionSettings.timer}
               onChange={(e) =>
-                updateSessionSettings({
-                  ...sessionSettings,
+                props.updateSessionSettings({
+                  ...props.sessionSettings,
                   timer: parseInt(e.target.value),
                 })
               }
@@ -81,14 +85,14 @@ export default function Settings(props: { triggerReveal: () => void }) {
                 type="number"
                 max={1}
                 step={0.05}
-                value={sessionSettings.audio}
+                value={props.sessionSettings.audio}
                 onChange={(e) =>
                   Promise.resolve(parseFloat(e.target.value)).then((audio) =>
                     Promise.resolve()
                       .then(() => playSound())
                       .then(() =>
-                        updateSessionSettings({
-                          ...sessionSettings,
+                        props.updateSessionSettings({
+                          ...props.sessionSettings,
                           audio,
                         })
                       )
@@ -130,8 +134,8 @@ export default function Settings(props: { triggerReveal: () => void }) {
                   )
                 )
                 .then((s) =>
-                  updateSessionSettings({
-                    ...sessionSettings,
+                  props.updateSessionSettings({
+                    ...props.sessionSettings,
                     category: s.value,
                   })
                 )
@@ -156,8 +160,8 @@ export default function Settings(props: { triggerReveal: () => void }) {
               Promise.resolve()
                 .then(() => e.preventDefault())
                 .then(() =>
-                  updateSessionSettings({
-                    ...sessionSettings,
+                  props.updateSessionSettings({
+                    ...props.sessionSettings,
                     category: categoryInput,
                   })
                 )
@@ -172,19 +176,19 @@ export default function Settings(props: { triggerReveal: () => void }) {
           </form>
           <button
             onClick={() =>
-              timeout !== null || sessionSettings.timer === 0
+              timeout !== null || props.sessionSettings.timer === 0
                 ? clearTimeoutHook()
                 : setTimeoutHook()
             }
-            disabled={!sessionSettings.category}
+            disabled={!props.sessionSettings.category}
           >
-            {!sessionSettings.category
+            {!props.sessionSettings.category
               ? "*none*"
               : timeout === null
               ? "*reveal*"
-              : sessionSettings.category}
+              : props.sessionSettings.category}
           </button>
-          {!sessionSettings.category || timeout !== null ? null : (
+          {!props.sessionSettings.category || timeout !== null ? null : (
             <button onClick={() => updateTimeout(setTimeout(() => null))}>
               *preview*
             </button>

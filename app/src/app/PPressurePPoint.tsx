@@ -4,11 +4,14 @@ import Items, { ItemType } from "./Items";
 import recorded_sha from "./recorded_sha";
 import Settings from "./Settings";
 import ShareLink from "./ShareLink";
+import { defaultSettings, SettingsType } from "./utils";
 
 export default function PPressurePPoint() {
   console.log(recorded_sha);
   const firstRef = createRef<HTMLInputElement>();
   const [reveal, updateReveal] = useState(0);
+  const [sessionSettings, updateSessionSettings] =
+    useState<SettingsType>(defaultSettings);
   const [items, updateItems] = useState<ItemType[]>([]);
   return (
     <div
@@ -44,6 +47,8 @@ export default function PPressurePPoint() {
           <Instructions />
           <ShareLink />
           <Settings
+            sessionSettings={sessionSettings}
+            updateSessionSettings={updateSessionSettings}
             triggerReveal={() =>
               Promise.resolve()
                 .then(() => firstRef.current?.focus())
