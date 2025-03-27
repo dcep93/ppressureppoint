@@ -4,12 +4,14 @@ import suggestions, { Domain } from "./suggestions";
 const defaultSettings = {
   category: null,
   timer: 0,
+  audio: false,
   challenge: null,
 };
 
 export type SettingsType = {
   category: string | null;
-  timer: number; // negative to flash and audio ping
+  timer: number;
+  audio: boolean;
   challenge: { hint: string; answers: AnswerType[] } | null;
 };
 
@@ -43,13 +45,12 @@ export function hashToState(hash: string): SettingsType {
 }
 
 export default function Settings() {
-  const [sessionSettings, updateSessionSettings] = useState<SettingsType>({
-    category: null,
-    timer: 0,
-    challenge: null,
-  });
+  const [sessionSettings, updateSessionSettings] =
+    useState<SettingsType>(defaultSettings);
+  const [domain, updateDomain] = useState(Domain.ANY);
+  const [categoryInput, updateCategoryInput] = useState("");
 
-  function CategoryButton() {
+  function CategoryRevealer() {
     return (
       <button
         onSubmit={() => alert("button")}
@@ -59,12 +60,38 @@ export default function Settings() {
       </button>
     );
   }
-
-  const [domain, updateDomain] = useState(Domain.ANY);
-  const [categoryInput, updateCategoryInput] = useState("");
   return (
     <div style={{ minWidth: "20em" }}>
       <div>
+        <div>
+          <div>
+            timer_seconds:{" "}
+            <input
+              type="number"
+              value={sessionSettings.timer}
+              onChange={(e) =>
+                updateSessionSettings({
+                  ...sessionSettings,
+                  timer: parseInt(e.target.value),
+                })
+              }
+              style={{ width: "1.5em" }}
+            />{" "}
+            <label>
+              audible_timer:{" "}
+              <input
+                type="checkbox"
+                checked={sessionSettings.audio}
+                onChange={(e) =>
+                  updateSessionSettings({
+                    ...sessionSettings,
+                    audio: e.target.checked,
+                  })
+                }
+              />
+            </label>
+          </div>
+        </div>
         <div>
           <div>
             domain:{" "}
@@ -123,7 +150,7 @@ export default function Settings() {
                 style={{ width: "6em" }}
               />
             </form>
-            <CategoryButton />
+            <CategoryRevealer />
           </div>
         </div>
       </div>
