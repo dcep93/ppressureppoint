@@ -53,16 +53,21 @@ export default function Settings() {
     useState<SettingsType>(defaultSettings);
   const [domain, updateDomain] = useState(Domain.ANY);
   const [categoryInput, updateCategoryInput] = useState("");
+  const [revealed, updateRevealed] = useState(false);
 
   const [playSound] = useSound(beepMp3, { volume: sessionSettings.audio });
 
   function CategoryRevealer() {
     return (
       <button
-        onClick={() => alert("button")}
+        onClick={() => Promise.resolve().then(() => updateRevealed(true))}
         disabled={!sessionSettings.category}
       >
-        {sessionSettings.category || "no category"}
+        {!sessionSettings.category
+          ? "*none*"
+          : !revealed
+          ? "*reveal*"
+          : sessionSettings.category}
       </button>
     );
   }
@@ -142,6 +147,7 @@ export default function Settings() {
                       category: s.value,
                     })
                   )
+                  .then(() => updateRevealed(false))
               }
             >
               suggest
@@ -162,6 +168,7 @@ export default function Settings() {
                       category: categoryInput,
                     })
                   )
+                  .then(() => updateRevealed(false))
               }
             >
               <input

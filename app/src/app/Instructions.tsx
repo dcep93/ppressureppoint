@@ -4,7 +4,7 @@ export default function Instructions() {
       <h1>Welcome to PPressurePPoint</h1>
       <ul>
         <li>How many can you name?</li>
-        <li>When you're ready, reveal the secret challenge category.</li>
+        <li>When you're ready, *reveal* the secret challenge category.</li>
         <li>Submit answers as fast as you can for better results.</li>
         <li>Good training for trivia! Challenge your senpai!</li>
         <li>
