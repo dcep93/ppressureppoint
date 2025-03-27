@@ -1,15 +1,11 @@
 import { useState } from "react";
 import suggestions, { Domain } from "./suggestions";
 
-const sessionSettings: SettingsType = {
+const defaultSettings = {
   category: null,
   timer: 0,
   challenge: null,
 };
-
-export default function Settings() {
-  return <SettingsHelper handleCategory={(c) => alert(c)} />;
-}
 
 export type SettingsType = {
   category: string | null;
@@ -25,7 +21,7 @@ export type AnswerType = {
 
 export function getSettings(): SettingsType {
   const s = hashToState(window.location.hash.slice(1));
-  return Object.assign({}, sessionSettings, s);
+  return { ...defaultSettings, ...s };
 }
 
 export function stateToHash(state: SettingsType): string {
@@ -34,7 +30,7 @@ export function stateToHash(state: SettingsType): string {
 
 export function hashToState(hash: string): SettingsType {
   if (!hash) {
-    return sessionSettings;
+    return defaultSettings;
   }
   var parsed = {};
   try {
@@ -43,10 +39,15 @@ export function hashToState(hash: string): SettingsType {
     console.log("error caught", { e, hash });
     console.error(e);
   }
-  return Object.assign(sessionSettings, null, parsed as any);
+  return { ...defaultSettings, ...parsed };
 }
 
-function SettingsHelper(props: { handleCategory: (category: string) => void }) {
+export default function Settings() {
+  const [sessionSettings, updateSessionSettings] = useState<SettingsType>({
+    category: null,
+    timer: 0,
+    challenge: null,
+  });
   const [domain, updateDomain] = useState(Domain.any);
   return (
     <div>
@@ -75,7 +76,12 @@ function SettingsHelper(props: { handleCategory: (category: string) => void }) {
                       )
                     )
                   )
-                  .then((s) => props.handleCategory(s.value))
+                  .then((s) =>
+                    updateSessionSettings({
+                      ...sessionSettings,
+                      category: s.value,
+                    })
+                  )
               }
             >
               suggest
@@ -93,7 +99,15 @@ function SettingsHelper(props: { handleCategory: (category: string) => void }) {
                       "settings_input"
                     ) as string
                 )
-                .then((c) => c && props.handleCategory(c))
+
+                .then(
+                  (category) =>
+                    category &&
+                    updateSessionSettings({
+                      ...sessionSettings,
+                      category,
+                    })
+                )
             }
           >
             <div>
