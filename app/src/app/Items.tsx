@@ -98,6 +98,19 @@ export default function Items(props: {
 }
 
 function ChallengeItem(props: { i: number; item: ItemType }) {
+  if (props.item.c.includes("\\")) {
+    const parts = props.item.c.split("\\");
+    return (
+      <div>
+        <span>#{props.i + 1}</span>
+        <img
+          onClick={() => alert(parts[0])}
+          src={parts[1]}
+          style={{ width: "16em", cursor: "pointer" }}
+        />
+      </div>
+    );
+  }
   return (
     <span>
       <span style={{ display: "inline-block", width: "8em" }}>
