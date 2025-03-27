@@ -1,3 +1,3 @@
-export default function Names() {
-  return <div>Items</div>;
+export default function Items() {
+  return <div>items</div>;
 }

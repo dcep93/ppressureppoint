@@ -1,7 +1,8 @@
 import Instructions from "./Instructions";
 import Items from "./Items";
+import Settings from "./Settings";
 
-export default function PressurePoint() {
+export default function PPressurePPoint() {
   return (
     <div
       style={{
@@ -19,6 +20,7 @@ export default function PressurePoint() {
         }}
       >
         <Instructions />
+        <Settings />
         <Items />
       </div>
     </div>

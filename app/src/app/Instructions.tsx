@@ -1,7 +1,7 @@
 export default function Instructions() {
   return (
     <div style={{ maxWidth: "50em" }}>
-      <h1>Welcome to PressurePoint</h1>
+      <h1>Welcome to PPressurePPoint</h1>
       <ul>
         <li>How many can you name?</li>
         <li>When you're ready, reveal the secret challenge category.</li>
