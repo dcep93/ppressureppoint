@@ -3,7 +3,7 @@ import suggestions, { Domain } from "./suggestions";
 
 const defaultSettings = {
   category: null,
-  timer: 0,
+  timer: 10,
   audio: false,
   challenge: null,
 };
@@ -64,32 +64,38 @@ export default function Settings() {
     <div style={{ minWidth: "20em" }}>
       <div>
         <div>
-          <div>
-            timer_seconds:{" "}
-            <input
-              type="number"
-              value={sessionSettings.timer}
-              onChange={(e) =>
-                updateSessionSettings({
-                  ...sessionSettings,
-                  timer: parseInt(e.target.value),
-                })
-              }
-              style={{ width: "1.5em" }}
-            />{" "}
-            <label>
-              audible_timer:{" "}
+          <div style={{ display: "flex" }}>
+            <div>
+              timer_seconds:{" "}
               <input
-                type="checkbox"
-                checked={sessionSettings.audio}
+                type="number"
+                value={sessionSettings.timer}
                 onChange={(e) =>
                   updateSessionSettings({
                     ...sessionSettings,
-                    audio: e.target.checked,
+                    timer: parseInt(e.target.value),
                   })
                 }
+                style={{ width: "2em" }}
               />
-            </label>
+            </div>
+            <div style={{ width: "1em" }}></div>
+            <div>
+              <label>
+                audible_timer:{" "}
+                <input
+                  type="checkbox"
+                  checked={sessionSettings.audio}
+                  style={{ transform: "scale(1.5)" }}
+                  onChange={(e) =>
+                    updateSessionSettings({
+                      ...sessionSettings,
+                      audio: e.target.checked,
+                    })
+                  }
+                />
+              </label>
+            </div>
           </div>
         </div>
         <div>

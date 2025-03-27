@@ -17,7 +17,7 @@ export default function PPressurePPoint() {
     >
       <style>
         {`
-        input,option,select {
+        input,option,select,button {
           font-size: large;
         }
         `}
