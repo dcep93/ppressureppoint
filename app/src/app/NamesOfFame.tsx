@@ -11,8 +11,16 @@ export default function NamesOfFame() {
         backgroundColor: "grey",
       }}
     >
-      <Instructions />
-      <Names />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Instructions />
+        <Names />
+      </div>
     </div>
   );
 }
