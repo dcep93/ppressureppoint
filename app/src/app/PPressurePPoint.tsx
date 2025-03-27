@@ -13,7 +13,7 @@ export default function PPressurePPoint() {
   const initialSettings = getHashSettings();
   const [sessionSettings, updateSessionSettings] = useState(initialSettings);
   const [items, updateItems] = useState<ItemType[]>([]);
-  const [challengeRevealed, updateChallengeRevealed] = useState(true);
+  const [challengeRevealed, updateChallengeRevealed] = useState(false);
   return (
     <div
       style={{

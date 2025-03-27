@@ -85,7 +85,7 @@ export default function Items(props: {
           {props.challenge.map((c, i) => (
             <div key={i}>
               <span style={{ display: "inline-block", width: "8em" }}>
-                #{i + 1} / {c.t}
+                #{i + 1} / {(c.t / 1000).toFixed(3)}
               </span>
               ☑ {c.c}
             </div>
