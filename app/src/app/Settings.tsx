@@ -9,6 +9,8 @@ import beepMp3 from "./mp3/beep.mp3";
 
 const BLACKOUT_DURATION_MS = 1000;
 
+const seenCategories: string[] = [];
+
 export default function Settings(props: {
   triggerReveal: () => void;
   triggerTimer: () => void;
@@ -132,15 +134,17 @@ export default function Settings(props: {
                 .then(() => e.preventDefault())
                 .then(() =>
                   randomFrom(
-                    suggestions.filter(
-                      (s) => domain === Domain.ANY || s.domain === domain
-                    )
+                    suggestions
+                      .filter(
+                        (s) => domain === Domain.ANY || s.domain === domain
+                      )
+                      .map((s) => s.value)
                   )
                 )
-                .then((s) =>
+                .then((category) =>
                   props.updateSessionSettings({
                     ...props.sessionSettings,
-                    category: s.value,
+                    category,
                   })
                 )
                 .then(clearTimeoutHook)
@@ -222,6 +226,21 @@ function enumArray<X>(enumType: { [k: string]: string | X }): X[] {
     .map((e) => e as unknown as X);
 }
 
-function randomFrom<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
+function randomFrom(possibleCategories: string[]): string {
+  console.log(
+    possibleCategories
+      .map((c) => ({
+        c,
+        s: Math.random() + (seenCategories.includes(c) ? 1 : 0),
+      }))
+      .sort((a, b) => a.s - b.s)
+  );
+  const c = possibleCategories
+    .map((c) => ({
+      c,
+      s: Math.random() + (seenCategories.includes(c) ? 1 : 0),
+    }))
+    .sort((a, b) => a.s - b.s)[0].c;
+  seenCategories.push(c);
+  return c;
 }

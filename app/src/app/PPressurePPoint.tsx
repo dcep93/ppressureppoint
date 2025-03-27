@@ -6,8 +6,9 @@ import Settings from "./Settings";
 import ShareLink from "./ShareLink";
 import { getHashSettings } from "./utils";
 
+console.log(recorded_sha);
+
 export default function PPressurePPoint() {
-  console.log(recorded_sha);
   const firstRef = createRef<HTMLInputElement>();
   const [reveal, updateReveal] = useState(0);
   const initialSettings = getHashSettings();
