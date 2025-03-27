@@ -7,12 +7,15 @@ import { defaultSettings, SettingsType } from "./utils";
 // @ts-ignore
 import beepMp3 from "./mp3/beep.mp3";
 
+const BLACKOUT_DURATION_MS = 1000;
+
 export default function Settings(props: { triggerReveal: () => void }) {
   const [sessionSettings, updateSessionSettings] =
     useState<SettingsType>(defaultSettings);
   const [domain, updateDomain] = useState(Domain.ANY);
   const [categoryInput, updateCategoryInput] = useState("");
   const [timeout, updateTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [blackout, updateBlackout] = useState(false);
 
   const [playSound] = useSound(beepMp3, { volume: sessionSettings.audio });
 
@@ -30,7 +33,26 @@ export default function Settings(props: { triggerReveal: () => void }) {
   }
 
   function trigger() {
-    alert("trigger");
+    playSound();
+    updateBlackout(true);
+    setTimeout(() => updateBlackout(false), BLACKOUT_DURATION_MS);
+  }
+
+  function Blackout() {
+    return !blackout ? null : (
+      <div
+        style={{
+          position: "fixed",
+          backgroundColor: "black",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
+      >
+        blackout
+      </div>
+    );
   }
 
   function TimerSettings() {
@@ -170,6 +192,7 @@ export default function Settings(props: { triggerReveal: () => void }) {
   return (
     <div style={{ minWidth: "20em" }}>
       <div>
+        <Blackout />
         <TimerSettings />
         <DomainSettings />
         <CategorySettings />
