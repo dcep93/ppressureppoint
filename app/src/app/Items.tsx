@@ -1,7 +1,7 @@
 var startTime = Date.now();
 
 export default function Items() {
-  return <div>{startTime}</div>;
+  return <div>{startTime} items</div>;
 }
 
 export function setStartTime(_startTime: number | null = null) {
