@@ -48,7 +48,16 @@ export default function Settings() {
     timer: 0,
     challenge: null,
   });
-  const [domain, updateDomain] = useState(Domain.any);
+
+  function CategoryButton() {
+    return (
+      <button disabled={!sessionSettings.category}>
+        {sessionSettings.category || "no category"}
+      </button>
+    );
+  }
+
+  const [domain, updateDomain] = useState(Domain.ANY);
   return (
     <div>
       <div>
@@ -72,7 +81,7 @@ export default function Settings() {
                   .then(() =>
                     randomFrom(
                       suggestions.filter(
-                        (s) => domain === Domain.any || s.domain === domain
+                        (s) => domain === Domain.ANY || s.domain === domain
                       )
                     )
                   )
@@ -99,7 +108,6 @@ export default function Settings() {
                       "settings_input"
                     ) as string
                 )
-
                 .then(
                   (category) =>
                     category &&
@@ -111,7 +119,8 @@ export default function Settings() {
             }
           >
             <div>
-              category: <input name="settings_input" style={{ width: "6em" }} />
+              category: <input name="settings_input" style={{ width: "6em" }} />{" "}
+              <CategoryButton />
             </div>
           </form>
         </div>

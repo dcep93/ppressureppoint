@@ -1,5 +1,5 @@
 export enum Domain {
-  any,
+  ANY,
   celebrity,
   music,
   geography,
