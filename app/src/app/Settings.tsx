@@ -21,11 +21,10 @@ export type AnswerType = {
 };
 
 export function stateToHash(state: SettingsType): string {
-  return JSON.stringify(state);
+  return btoa(JSON.stringify(state));
 }
 
 export function hashToState(hash: string): SettingsType {
-  console.log([decodeURIComponent(hash)]);
   const defaultSettings: SettingsType = {
     category: null,
     timer: 0,
@@ -33,7 +32,7 @@ export function hashToState(hash: string): SettingsType {
   };
   var parsed = {};
   try {
-    parsed = JSON.parse(decodeURIComponent(hash));
+    parsed = JSON.parse(atob(hash));
   } catch (e) {
     console.error(e);
   }
