@@ -15,7 +15,6 @@ export type SettingsType = {
 
 export function getSettings(): SettingsType {
   const s = hashToState(window.location.hash.slice(1));
-  console.log("getSettings", s);
   return s;
 }
 
@@ -34,16 +33,19 @@ function SettingsHelper(props: {
               onSubmit={(e) =>
                 Promise.resolve()
                   .then(() => e.preventDefault())
-                  .then(() =>
-                    new FormData(e.target as HTMLFormElement).get("category")
+                  .then(
+                    () =>
+                      new FormData(e.target as HTMLFormElement).get(
+                        "input"
+                      ) as string
                   )
-                  .then((c) => c && props.handleCategory(c as string))
+                  .then((c) => c && props.handleCategory(c))
               }
             >
               <div>
                 category:{" "}
                 <input
-                  name="category"
+                  name="input"
                   style={{ width: "3em", backgroundColor: "#cccccc" }}
                 />
               </div>
