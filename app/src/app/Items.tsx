@@ -64,8 +64,7 @@ export default function Items(props: {
   }
 
   return (
-    <div>
-      <div>{JSON.stringify(props.challenge)}</div>
+    <div style={{ display: "flex" }}>
       <div>
         {props.items
           .concat({
@@ -80,6 +79,19 @@ export default function Items(props: {
             </div>
           ))}
       </div>
+      {props.challenge === null ? null : (
+        <div>
+          <h4>challenge!</h4>
+          {props.challenge.map((c, i) => (
+            <div key={i}>
+              <span style={{ display: "inline-block", width: "8em" }}>
+                #{i + 1} / {c.t}
+              </span>
+              ☑ {c.c}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

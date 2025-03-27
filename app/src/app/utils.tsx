@@ -2,15 +2,15 @@ import { ItemType } from "./Items";
 
 export const defaultSettings = {
   category: null,
-  timer: 10,
-  audio: 0,
+  timer_s: 10,
+  volume: 0,
   challenge: null,
 };
 
 export type SettingsType = {
   category: string | null;
-  timer: number;
-  audio: number;
+  timer_s: number;
+  volume: number;
   challenge: ChallengeType;
 };
 
@@ -30,7 +30,7 @@ export function getHashSettings(): SettingsType {
       console.log("error caught", { e, hash });
       console.error(e);
     }
-    return { ...defaultSettings, ...parsed };
+    return { ...defaultSettings, ...parsed, volume: 0 };
   }
   const s = hashToState(window.location.hash.slice(1));
   return { ...defaultSettings, ...s };

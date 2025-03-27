@@ -10,7 +10,8 @@ export default function PPressurePPoint() {
   console.log(recorded_sha);
   const firstRef = createRef<HTMLInputElement>();
   const [reveal, updateReveal] = useState(0);
-  const [sessionSettings, updateSessionSettings] = useState(getHashSettings());
+  const initialSettings = getHashSettings();
+  const [sessionSettings, updateSessionSettings] = useState(initialSettings);
   const [items, updateItems] = useState<ItemType[]>([]);
   const [challengeRevealed, updateChallengeRevealed] = useState(true);
   return (
@@ -60,7 +61,11 @@ export default function PPressurePPoint() {
                 .then(() => updateItems([]))
                 .then(() => updateChallengeRevealed(false))
             }
-            triggerTimer={() => updateChallengeRevealed(true)}
+            triggerTimer={() =>
+              updateChallengeRevealed(
+                sessionSettings.category === initialSettings.category
+              )
+            }
           />
           <Items
             firstRef={firstRef}

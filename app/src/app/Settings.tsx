@@ -21,12 +21,14 @@ export default function Settings(props: {
   const [blackout, updateBlackout] = useState(false);
 
   const [playSound] = useSound(beepMp3, {
-    volume: props.sessionSettings.audio,
+    volume: props.sessionSettings.volume,
   });
 
   function setTimeoutHook() {
     Promise.resolve()
-      .then(() => setTimeout(triggerTimer, props.sessionSettings.timer * 1000))
+      .then(() =>
+        setTimeout(triggerTimer, props.sessionSettings.timer_s * 1000)
+      )
       .then((createdTimeout) => updateTimeout(createdTimeout))
       .then(props.triggerReveal);
   }
@@ -69,11 +71,11 @@ export default function Settings(props: {
             timer_seconds:{" "}
             <input
               type="number"
-              value={props.sessionSettings.timer}
+              value={props.sessionSettings.timer_s}
               onChange={(e) =>
                 props.updateSessionSettings({
                   ...props.sessionSettings,
-                  timer: parseInt(e.target.value),
+                  timer_s: parseInt(e.target.value),
                 })
               }
               style={{ width: "2em" }}
@@ -87,15 +89,15 @@ export default function Settings(props: {
                 type="number"
                 max={1}
                 step={0.05}
-                value={props.sessionSettings.audio}
+                value={props.sessionSettings.volume}
                 onChange={(e) =>
-                  Promise.resolve(parseFloat(e.target.value)).then((audio) =>
+                  Promise.resolve(parseFloat(e.target.value)).then((volume) =>
                     Promise.resolve()
                       .then(() => playSound())
                       .then(() =>
                         props.updateSessionSettings({
                           ...props.sessionSettings,
-                          audio,
+                          volume,
                         })
                       )
                   )
@@ -178,7 +180,7 @@ export default function Settings(props: {
           </form>
           <button
             onClick={() =>
-              timeout !== null || props.sessionSettings.timer === 0
+              timeout !== null || props.sessionSettings.timer_s === 0
                 ? clearTimeoutHook()
                 : setTimeoutHook()
             }
