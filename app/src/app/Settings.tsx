@@ -51,7 +51,10 @@ export default function Settings() {
 
   function CategoryButton() {
     return (
-      <button disabled={!sessionSettings.category}>
+      <button
+        onSubmit={() => alert("button")}
+        disabled={!sessionSettings.category}
+      >
         {sessionSettings.category || "no category"}
       </button>
     );
@@ -60,7 +63,7 @@ export default function Settings() {
   const [domain, updateDomain] = useState(Domain.ANY);
   const [categoryInput, updateCategoryInput] = useState("");
   return (
-    <div>
+    <div style={{ minWidth: "20em" }}>
       <div>
         <div>
           <div>
@@ -99,23 +102,29 @@ export default function Settings() {
           </div>
         </div>
         <div>
-          <form
-            onSubmit={(e) =>
-              Promise.resolve()
-                .then(() => e.preventDefault())
-                .then(() => alert("categoryInput"))
-            }
-          >
-            <div>
-              category:{" "}
+          <div>
+            category:{" "}
+            <form
+              style={{ display: "inline" }}
+              onSubmit={(e) =>
+                Promise.resolve()
+                  .then(() => e.preventDefault())
+                  .then(() =>
+                    updateSessionSettings({
+                      ...sessionSettings,
+                      category: categoryInput,
+                    })
+                  )
+              }
+            >
               <input
                 value={categoryInput}
                 onChange={(e) => updateCategoryInput(e.target.value)}
                 style={{ width: "6em" }}
-              />{" "}
-              <CategoryButton />
-            </div>
-          </form>
+              />
+            </form>
+            <CategoryButton />
+          </div>
         </div>
       </div>
     </div>

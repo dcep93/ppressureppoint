@@ -37,7 +37,6 @@ export default function Items() {
         <input
           value={c}
           onChange={(e) => updateC(e.target.value)}
-          name="item_input"
           autoFocus={props.item.t === 0}
           style={{
             width: "8em",
