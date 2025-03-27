@@ -27,12 +27,10 @@ export default function ShareLink(props: {
       <div>
         <select
           onChange={(e) =>
-            Promise.resolve(e.target!.value)
-              .then((selected) => saved_challenges[selected])
-              .then(
-                (settings) =>
-                  settings && window.open(`${stateToHash(settings)}`)
-              )
+            Promise.resolve(e.target!.value).then(
+              (selected) =>
+                saved_challenges[selected] && window.open(`/${selected}`)
+            )
           }
         >
           <option>saved_challenges</option>
