@@ -41,9 +41,11 @@ export default function Settings(props: {
   }
 
   function triggerTimer() {
-    playSound();
-    updateBlackout(true);
-    setTimeout(() => updateBlackout(false), BLACKOUT_DURATION_MS);
+    if (props.sessionSettings.timer_s > 0) {
+      playSound();
+      updateBlackout(true);
+      setTimeout(() => updateBlackout(false), BLACKOUT_DURATION_MS);
+    }
     props.triggerTimer();
   }
 
@@ -184,9 +186,7 @@ export default function Settings(props: {
           </form>
           <button
             onClick={() =>
-              timeout !== null || props.sessionSettings.timer_s === 0
-                ? clearTimeoutHook()
-                : setTimeoutHook()
+              timeout !== null ? clearTimeoutHook() : setTimeoutHook()
             }
             disabled={!props.sessionSettings.category}
           >
