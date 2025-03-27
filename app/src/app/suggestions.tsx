@@ -25,6 +25,7 @@ const suggestions: {
   { domain: Domain.music, value: "Beatles songs" },
   { domain: Domain.geography, value: "cities in Ohio" },
   { domain: Domain.food, value: "vegetables beginning with c" },
+  { domain: Domain.geography, value: "US states" },
 ];
 
 export default suggestions;
