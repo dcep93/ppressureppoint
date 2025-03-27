@@ -6,6 +6,7 @@ export default function ShareLink(props: {
   items: ItemType[];
   reveal: number;
 }) {
+  const reveal = props.reveal || props.items[0]?.t;
   return (
     <div>
       <a
@@ -13,7 +14,7 @@ export default function ShareLink(props: {
           ...props.sessionSettings,
           challenge: props.items.map((item) => ({
             ...item,
-            t: item.t - props.reveal,
+            t: item.t - reveal,
           })),
         })}
       >

@@ -13,39 +13,43 @@ export default function Items(props: {
   function Item(pprops: { item: ItemType; i: number }) {
     const [c, updateC] = useState(pprops.item.c);
     return (
-      <form
-        onSubmit={(e) =>
-          Promise.resolve()
-            .then(() => e.preventDefault())
-            .then(() =>
-              !c
-                ? null
-                : Promise.resolve(Date.now()).then((t) =>
-                    props.updateItems(
-                      pprops.item.t === 0
-                        ? props.items.concat({
-                            t,
-                            c,
-                          })
-                        : props.items
-                            .splice(pprops.i, 1, { ...pprops.item, t, c })
-                            .slice(1)
-                            .concat(props.items)
+      <div style={{ display: "flex" }}>
+        <form
+          onSubmit={(e) =>
+            Promise.resolve()
+              .then(() => e.preventDefault())
+              .then(() =>
+                !c
+                  ? null
+                  : Promise.resolve(Date.now()).then((t) =>
+                      props.updateItems(
+                        pprops.item.t === 0
+                          ? props.items.concat({
+                              t,
+                              c,
+                            })
+                          : props.items
+                              .splice(pprops.i, 1, { ...pprops.item, t, c })
+                              .slice(1)
+                              .concat(props.items)
+                      )
                     )
-                  )
-            )
-        }
-      >
-        <input type="submit" value="☑" disabled={pprops.item.c === c} />
-        <input
-          ref={pprops.item.t === 0 ? props.firstRef : undefined}
-          value={c}
-          onChange={(e) => updateC(e.target.value)}
-          autoFocus={props.items.length > 0 && pprops.item.t === 0}
-          style={{
-            width: "8em",
-          }}
-        />
+              )
+          }
+        >
+          <div style={{ display: "flex" }}>
+            <input type="submit" value="☑" disabled={pprops.item.c === c} />
+            <input
+              ref={pprops.item.t === 0 ? props.firstRef : undefined}
+              value={c}
+              onChange={(e) => updateC(e.target.value)}
+              autoFocus={props.reveal > 0 && pprops.item.t === 0}
+              style={{
+                width: "8em",
+              }}
+            />
+          </div>
+        </form>
         <div style={{ display: "inline-block", width: "8em" }}>
           {pprops.item.t === 0 ? null : (
             <div>
@@ -59,7 +63,7 @@ export default function Items(props: {
             </div>
           )}
         </div>
-      </form>
+      </div>
     );
   }
 

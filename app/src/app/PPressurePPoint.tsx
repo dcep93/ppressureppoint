@@ -57,7 +57,6 @@ export default function PPressurePPoint() {
             updateSessionSettings={updateSessionSettings}
             triggerReveal={() =>
               Promise.resolve()
-                .then(() => firstRef.current?.focus())
                 .then(() => updateReveal(Date.now()))
                 .then(() => updateItems([]))
                 .then(() => updateChallengeRevealed(false))
