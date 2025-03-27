@@ -1,4 +1,5 @@
 import { ItemType } from "./Items";
+import saved_challenges from "./saved_challenges";
 
 export const defaultSettings = {
   category: null,
@@ -17,6 +18,10 @@ export type SettingsType = {
 export type ChallengeType = ItemType[] | null;
 
 export function getHashSettings(): SettingsType {
+  const savedChallenge = saved_challenges[window.location.pathname.slice(1)];
+  if (savedChallenge !== undefined) {
+    return savedChallenge;
+  }
   function hashToState(hash: string): SettingsType {
     if (!hash) {
       return defaultSettings;
