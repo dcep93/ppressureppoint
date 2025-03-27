@@ -1,8 +1,10 @@
 import Instructions from "./Instructions";
 import Items from "./Items";
+import recorded_sha from "./recorded_sha";
 import Settings from "./Settings";
 
 export default function PPressurePPoint() {
+  console.log(recorded_sha);
   return (
     <div
       style={{
