@@ -29,29 +29,6 @@ function SettingsHelper(props: {
       <div>
         <div>
           <div>
-            <form
-              onSubmit={(e) =>
-                Promise.resolve()
-                  .then(() => e.preventDefault())
-                  .then(
-                    () =>
-                      new FormData(e.target as HTMLFormElement).get(
-                        "input"
-                      ) as string
-                  )
-                  .then((c) => c && props.handleCategory(c))
-              }
-            >
-              <div>
-                category:{" "}
-                <input
-                  name="input"
-                  style={{ width: "3em", backgroundColor: "#cccccc" }}
-                />
-              </div>
-            </form>
-          </div>
-          <div>
             domain:{" "}
             <select
               style={{ width: "6em" }}
@@ -80,6 +57,25 @@ function SettingsHelper(props: {
               suggest
             </button>
           </div>
+        </div>
+        <div>
+          <form
+            onSubmit={(e) =>
+              Promise.resolve()
+                .then(() => e.preventDefault())
+                .then(
+                  () =>
+                    new FormData(e.target as HTMLFormElement).get(
+                      "input"
+                    ) as string
+                )
+                .then((c) => c && props.handleCategory(c))
+            }
+          >
+            <div>
+              category: <input name="input" style={{ width: "6em" }} />
+            </div>
+          </form>
         </div>
       </div>
     </div>
