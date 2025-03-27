@@ -14,8 +14,9 @@ export type SettingsType = {
 };
 
 export function getSettings(): SettingsType {
-  console.log("getSettings");
-  return hashToState(window.location.hash.slice(1));
+  const s = hashToState(window.location.hash.slice(1));
+  console.log("getSettings", s);
+  return s;
 }
 
 function SettingsHelper(props: {
