@@ -7,7 +7,7 @@ import { defaultSettings, SettingsType } from "./utils";
 // @ts-ignore
 import beepMp3 from "./mp3/beep.mp3";
 
-export default function Settings(props: { selectFirstRef: () => void }) {
+export default function Settings(props: { triggerReveal: () => void }) {
   const [sessionSettings, updateSessionSettings] =
     useState<SettingsType>(defaultSettings);
   const [domain, updateDomain] = useState(Domain.ANY);
@@ -15,6 +15,13 @@ export default function Settings(props: { selectFirstRef: () => void }) {
   const [timeout, updateTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const [playSound] = useSound(beepMp3, { volume: sessionSettings.audio });
+
+  function setTimeoutHook() {
+    Promise.resolve()
+      .then(() => setTimeout(trigger, sessionSettings.timer * 1000))
+      .then((createdTimeout) => updateTimeout(createdTimeout))
+      .then(props.triggerReveal);
+  }
 
   function clearTimeoutHook() {
     Promise.resolve()
@@ -145,12 +152,7 @@ export default function Settings(props: { selectFirstRef: () => void }) {
             onClick={() =>
               timeout !== null || sessionSettings.timer === 0
                 ? clearTimeoutHook()
-                : Promise.resolve()
-                    .then(() =>
-                      setTimeout(trigger, sessionSettings.timer * 1000)
-                    )
-                    .then((createdTimeout) => updateTimeout(createdTimeout))
-                    .then(props.selectFirstRef)
+                : setTimeoutHook()
             }
             disabled={!sessionSettings.category}
           >

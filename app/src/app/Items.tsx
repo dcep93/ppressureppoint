@@ -1,20 +1,15 @@
 import { RefObject, useState } from "react";
 
-const startTime = Date.now();
-
 type ItemType = { c: string; t: number };
 
 export default function Items(props: {
+  reveal: number;
   firstRef: RefObject<HTMLInputElement | null>;
 }) {
   const [items, updateItems] = useState<ItemType[]>([]);
 
-  function Item(props: {
-    item: ItemType;
-    i: number;
-    firstRef: RefObject<HTMLInputElement | null>;
-  }) {
-    const [c, updateC] = useState(props.item.c);
+  function Item(pprops: { item: ItemType; i: number }) {
+    const [c, updateC] = useState(pprops.item.c);
     return (
       <form
         onSubmit={(e) =>
@@ -23,15 +18,15 @@ export default function Items(props: {
             .then(() =>
               !c
                 ? null
-                : Promise.resolve(Date.now() - startTime).then((t) =>
+                : Promise.resolve(Date.now()).then((t) =>
                     updateItems(
-                      props.item.t === 0
+                      pprops.item.t === 0
                         ? items.concat({
                             t,
                             c,
                           })
                         : items
-                            .splice(props.i, 1, { ...props.item, t, c })
+                            .splice(pprops.i, 1, { ...pprops.item, t, c })
                             .slice(1)
                             .concat(items)
                     )
@@ -39,22 +34,26 @@ export default function Items(props: {
             )
         }
       >
-        <input type="submit" value="☑" disabled={props.item.c === c} />
+        <input type="submit" value="☑" disabled={pprops.item.c === c} />
         <input
-          ref={props.item.t === 0 ? props.firstRef : undefined}
+          ref={pprops.item.t === 0 ? props.firstRef : undefined}
           value={c}
           onChange={(e) => updateC(e.target.value)}
-          autoFocus={props.item.t === 0}
+          autoFocus={pprops.item.t === 0}
           style={{
             width: "8em",
           }}
         />
         <div style={{ display: "inline-block", width: "8em" }}>
-          {props.item.t === 0 ? null : (
+          {pprops.item.t === 0 ? null : (
             <div>
-              <span>#{props.i + 1}</span>
+              <span>#{pprops.i + 1}</span>
               {" / "}
-              <span>{(props.item.t / 1000).toFixed(3)}</span>
+              {props.reveal === 0 ? null : (
+                <span>
+                  {((pprops.item.t - props.reveal) / 1000).toFixed(3)}
+                </span>
+              )}
             </div>
           )}
         </div>
@@ -73,7 +72,7 @@ export default function Items(props: {
         .reverse()
         .map(({ item, i }) => (
           <div key={i}>
-            <Item item={item} i={i} firstRef={props.firstRef} />
+            <Item item={item} i={i} />
           </div>
         ))}
     </div>

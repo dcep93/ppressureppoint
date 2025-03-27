@@ -1,4 +1,4 @@
-import { createRef } from "react";
+import { createRef, useState } from "react";
 import Instructions from "./Instructions";
 import Items from "./Items";
 import recorded_sha from "./recorded_sha";
@@ -7,6 +7,7 @@ import Settings from "./Settings";
 export default function PPressurePPoint() {
   console.log(recorded_sha);
   const firstRef = createRef<HTMLInputElement>();
+  const [reveal, updateReveal] = useState(0);
   return (
     <div
       style={{
@@ -32,8 +33,14 @@ export default function PPressurePPoint() {
         }}
       >
         <Instructions />
-        <Settings selectFirstRef={() => firstRef.current?.focus()} />
-        <Items firstRef={firstRef} />
+        <Settings
+          triggerReveal={() =>
+            Promise.resolve()
+              .then(() => firstRef.current?.focus())
+              .then(() => updateReveal(Date.now()))
+          }
+        />
+        <Items firstRef={firstRef} reveal={reveal} />
       </div>
     </div>
   );
