@@ -53,23 +53,35 @@ export default function Settings(props: { selectFirstRef: () => void }) {
     useState<SettingsType>(defaultSettings);
   const [domain, updateDomain] = useState(Domain.ANY);
   const [categoryInput, updateCategoryInput] = useState("");
-  const [revealed, updateRevealed] = useState(false);
-
+  const [timeout, updateTimeout] = useState<NodeJS.Timeout | null>(null);
   const [playSound] = useSound(beepMp3, { volume: sessionSettings.audio });
+
+  function clearTimeoutHook() {
+    Promise.resolve()
+      .then(() => clearTimeout(timeout!))
+      .then(() => updateTimeout(null));
+  }
+
+  function trigger() {
+    alert("trigger");
+  }
 
   function CategoryRevealer() {
     return (
       <button
         onClick={() =>
-          Promise.resolve()
-            .then(() => updateRevealed(!revealed))
-            .then(props.selectFirstRef)
+          timeout !== null || sessionSettings.timer === 0
+            ? clearTimeoutHook()
+            : Promise.resolve()
+                .then(() => setTimeout(trigger, sessionSettings.timer * 1000))
+                .then((createdTimeout) => updateTimeout(createdTimeout))
+                .then(props.selectFirstRef)
         }
         disabled={!sessionSettings.category}
       >
         {!sessionSettings.category
           ? "*none*"
-          : !revealed
+          : timeout === null
           ? "*reveal*"
           : sessionSettings.category}
       </button>
@@ -151,7 +163,7 @@ export default function Settings(props: { selectFirstRef: () => void }) {
                       category: s.value,
                     })
                   )
-                  .then(() => updateRevealed(false))
+                  .then(clearTimeoutHook)
               }
             >
               suggest
@@ -172,7 +184,7 @@ export default function Settings(props: { selectFirstRef: () => void }) {
                       category: categoryInput,
                     })
                   )
-                  .then(() => updateRevealed(false))
+                  .then(clearTimeoutHook)
               }
             >
               <input

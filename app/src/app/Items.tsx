@@ -41,7 +41,7 @@ export default function Items(props: {
       >
         <input type="submit" value="☑" disabled={props.item.c === c} />
         <input
-          ref={props.firstRef}
+          ref={props.item.t === 0 ? props.firstRef : undefined}
           value={c}
           onChange={(e) => updateC(e.target.value)}
           autoFocus={props.item.t === 0}
