@@ -58,6 +58,7 @@ export default function Settings() {
   }
 
   const [domain, updateDomain] = useState(Domain.ANY);
+  const [categoryInput, updateCategoryInput] = useState("");
   return (
     <div>
       <div>
@@ -102,24 +103,16 @@ export default function Settings() {
             onSubmit={(e) =>
               Promise.resolve()
                 .then(() => e.preventDefault())
-                .then(
-                  () =>
-                    new FormData(e.target as HTMLFormElement).get(
-                      "settings_input"
-                    ) as string
-                )
-                .then(
-                  (category) =>
-                    category &&
-                    updateSessionSettings({
-                      ...sessionSettings,
-                      category,
-                    })
-                )
+                .then(() => alert("categoryInput"))
             }
           >
             <div>
-              category: <input name="settings_input" style={{ width: "6em" }} />{" "}
+              category:{" "}
+              <input
+                value={categoryInput}
+                onChange={(e) => updateCategoryInput(e.target.value)}
+                style={{ width: "6em" }}
+              />{" "}
               <CategoryButton />
             </div>
           </form>
