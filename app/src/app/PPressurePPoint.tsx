@@ -42,7 +42,7 @@ export default function PPressurePPoint() {
           style={{
             display: "flex",
             flexDirection: "column",
-            width: "35em",
+            maxWidth: "35em",
           }}
         >
           <Instructions />
