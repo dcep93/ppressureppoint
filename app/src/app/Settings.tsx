@@ -7,7 +7,14 @@ export default function Settings() {
   );
 }
 
+export type SettingsType = {
+  category: string | null;
+  timer: number; // negative to flash and audio ping
+  challenge: { hint: string; answers: AnswerType[] } | null;
+};
+
 export function getSettings(): SettingsType {
+  console.log("getSettings");
   return hashToState(window.location.hash.slice(1));
 }
 
@@ -75,12 +82,6 @@ function SettingsHelper(props: {
     </div>
   );
 }
-
-export type SettingsType = {
-  category: string | null;
-  timer: number; // negative to flash and audio ping
-  challenge: { hint: string; answers: AnswerType[] } | null;
-};
 
 export type AnswerType = {
   value: string;
