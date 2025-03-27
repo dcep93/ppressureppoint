@@ -1,4 +1,5 @@
 import { RefObject, useState } from "react";
+import { DATE_OFFSET } from "./utils";
 
 export type ItemType = { c: string; t: number };
 
@@ -18,7 +19,7 @@ export default function Items(props: {
             .then(() =>
               !c
                 ? null
-                : Promise.resolve(Date.now()).then((t) =>
+                : Promise.resolve(Date.now() - DATE_OFFSET).then((t) =>
                     props.updateItems(
                       pprops.item.t === 0
                         ? props.items.concat({
