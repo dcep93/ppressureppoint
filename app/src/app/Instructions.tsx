@@ -10,7 +10,12 @@ export default function Instructions() {
           Good training for trivia! Challenge your senpai! They should add this
           to sporcle.
         </li>
-        <li>Fan Project - no ownership intended.</li>
+        <li>
+          <a href="https://boardgamegeek.com/boardgame/36413/pressure-point">
+            Fan Project
+          </a>{" "}
+          - no ownership intended.
+        </li>
       </ul>
     </div>
   );
