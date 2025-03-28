@@ -1,7 +1,7 @@
 import { SettingsType } from "./utils";
 
 const saved_challenges: { [path: string]: SettingsType } = {
-  famous_daniels: {
+  celebrities_1: {
     category: "famous Daniels",
     timer_s: 10,
     volume: 0,
@@ -56,7 +56,7 @@ const saved_challenges: { [path: string]: SettingsType } = {
       },
     ],
   },
-  famous_michaels: {
+  celebrities_2: {
     category: "famous Michaels",
     timer_s: 10,
     volume: 0,
