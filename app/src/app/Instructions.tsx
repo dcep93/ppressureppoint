@@ -2,6 +2,9 @@ export default function Instructions() {
   return (
     <div>
       <h1>Welcome to PPressurePPoint</h1>
+      <h2>
+        under heavy construction - if I asked for feedback, come back later
+      </h2>
       <ul>
         <li>How many can you name?</li>
         <li>When you're ready, *reveal* the secret challenge category.</li>
