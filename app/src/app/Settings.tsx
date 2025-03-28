@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useSound from "use-sound";
 import suggestions, { Domain } from "./suggestions";
 
-import { SettingsType } from "./utils";
+import { bubbleStyle, SettingsType } from "./utils";
 
 // @ts-ignore
 import beepMp3 from "./mp3/beep.mp3";
@@ -20,7 +20,6 @@ export default function Settings(props: {
   sessionSettings: SettingsType;
   updateSessionSettings: (_sessionSettings: SettingsType) => void;
 }) {
-  const [domain, updateDomain] = useState(Domain.ANY);
   const [timeout, updateTimeout] = useState<NodeJS.Timeout | null>(null);
   const [blackout, updateBlackout] = useState(false);
 
@@ -118,6 +117,7 @@ export default function Settings(props: {
   }
 
   function DomainSettings() {
+    const [domain, updateDomain] = useState(Domain.ANY);
     return (
       <div>
         <div>
@@ -192,11 +192,15 @@ export default function Settings(props: {
                 .then(clearTimeoutHook)
             }
           >
-            <input
-              value={categoryInput}
-              onChange={(e) => updateCategoryInput(e.target.value)}
-              style={{ width: "6em" }}
-            />
+            {timeout !== null ? (
+              <span style={bubbleStyle}>{props.sessionSettings.category}</span>
+            ) : (
+              <input
+                value={categoryInput}
+                onChange={(e) => updateCategoryInput(e.target.value)}
+                style={{ width: "6em" }}
+              />
+            )}
           </form>
           <button
             onClick={() =>
