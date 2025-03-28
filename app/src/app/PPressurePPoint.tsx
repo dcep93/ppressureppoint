@@ -7,15 +7,15 @@ import ShareLink from "./ShareLink";
 import { bubbleStyle, getHashSettings } from "./utils";
 
 console.log(recorded_sha);
+const initialSettings = getHashSettings();
+console.log({ initialSettings });
 
 export default function PPressurePPoint() {
   const firstRef = createRef<HTMLInputElement>();
   const [reveal, updateReveal] = useState(0);
-  const initialSettings = getHashSettings();
   const [sessionSettings, updateSessionSettings] = useState(initialSettings);
   const [items, updateItems] = useState<ItemType[]>([]);
   const [challengeRevealed, updateChallengeRevealed] = useState(false);
-  console.log({ initialSettings });
   return (
     <div
       style={{
@@ -33,12 +33,6 @@ export default function PPressurePPoint() {
         }
         `}
       </style>
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        // crossorigin="anonymous"
-      />
       <div
         style={{
           display: "flex",

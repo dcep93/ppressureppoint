@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSound from "use-sound";
 import suggestions, { Domain } from "./suggestions";
 
@@ -10,6 +10,9 @@ import beepMp3 from "./mp3/beep.mp3";
 const BLACKOUT_DURATION_MS = 1000;
 
 const seenCategories: string[] = [];
+
+var timerTimeout = setTimeout(() => null);
+const TIMER_LATENCY_MS = 100;
 
 export default function Settings(props: {
   triggerReveal: () => void;
@@ -160,6 +163,17 @@ export default function Settings(props: {
 
   function CategorySettings() {
     const [categoryInput, updateCategoryInput] = useState("");
+    const [timerFloat, updateTimerFloat] = useState(Number.POSITIVE_INFINITY);
+    function timerLoop(tf: number) {
+      clearTimeout(timerTimeout);
+      tf = Math.max(0, tf - TIMER_LATENCY_MS / 1000);
+      updateTimerFloat(tf);
+      if (timeout === null || timerFloat === 0) return;
+      timerTimeout = setTimeout(() => timerLoop(tf), TIMER_LATENCY_MS);
+    }
+    useEffect(() => {
+      timerLoop(props.sessionSettings.timer_s);
+    }, [timeout]);
     return (
       <div>
         <div>
@@ -194,7 +208,7 @@ export default function Settings(props: {
               ? "*none*"
               : timeout === null
               ? "*reveal*"
-              : props.sessionSettings.category}
+              : timerFloat.toFixed(2)}
           </button>
           {!props.sessionSettings.category || timeout !== null ? null : (
             <button onClick={() => updateTimeout(setTimeout(() => null))}>

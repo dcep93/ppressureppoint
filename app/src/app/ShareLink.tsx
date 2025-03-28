@@ -11,6 +11,10 @@ export default function ShareLink(props: {
   return (
     <div style={{ display: "flex" }}>
       <div>
+        <a href="/">reset</a>
+      </div>
+      <div style={{ width: "2em" }}></div>
+      <div>
         <a
           href={stateToHash({
             ...props.sessionSettings,
