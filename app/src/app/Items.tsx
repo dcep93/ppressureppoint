@@ -68,31 +68,34 @@ export default function Items(props: {
   }
 
   return (
-    <div style={{ display: "flex" }}>
-      <div>
-        {props.items
-          .concat({
-            c: "",
-            t: 0,
-          })
-          .map((item, i) => ({ item, i }))
-          .reverse()
-          .map(({ item, i }) => (
-            <div key={i}>
-              <Item item={item} i={i} />
-            </div>
-          ))}
-      </div>
-      {props.challenge === null ? null : (
+    <div>
+      <h4>ANSWERS</h4>
+      <div style={{ display: "flex" }}>
         <div>
-          <h4>challenge!</h4>
-          {props.challenge.map((c, i) => (
-            <div key={i}>
-              <ChallengeItem i={i} item={c} />
-            </div>
-          ))}
+          {props.items
+            .concat({
+              c: "",
+              t: 0,
+            })
+            .map((item, i) => ({ item, i }))
+            .reverse()
+            .map(({ item, i }) => (
+              <div key={i}>
+                <Item item={item} i={i} />
+              </div>
+            ))}
         </div>
-      )}
+        {props.challenge === null ? null : (
+          <div>
+            <h4>challenge!</h4>
+            {props.challenge.map((c, i) => (
+              <div key={i}>
+                <ChallengeItem i={i} item={c} />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
