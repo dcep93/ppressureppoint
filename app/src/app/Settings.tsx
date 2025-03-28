@@ -173,7 +173,8 @@ export default function Settings(props: {
     }
     useEffect(() => {
       timerLoop(props.sessionSettings.timer_s);
-    }, [timeout]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [timeout, timerLoop]);
     return (
       <div>
         <div>
