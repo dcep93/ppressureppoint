@@ -4,7 +4,7 @@ import Items, { ItemType } from "./Items";
 import recorded_sha from "./recorded_sha";
 import Settings from "./Settings";
 import ShareLink from "./ShareLink";
-import { getHashSettings } from "./utils";
+import { bubbleStyle, getHashSettings } from "./utils";
 
 console.log(recorded_sha);
 
@@ -48,26 +48,29 @@ export default function PPressurePPoint() {
           }}
         >
           <Instructions />
-          <ShareLink
-            sessionSettings={sessionSettings}
-            items={items}
-            reveal={reveal}
-          />
-          <Settings
-            sessionSettings={sessionSettings}
-            updateSessionSettings={updateSessionSettings}
-            triggerReveal={() =>
-              Promise.resolve()
-                .then(() => updateReveal(Date.now()))
-                .then(() => updateItems([]))
-                .then(() => updateChallengeRevealed(false))
-            }
-            triggerTimer={() =>
-              updateChallengeRevealed(
-                sessionSettings.category === initialSettings.category
-              )
-            }
-          />
+          <div style={{ ...bubbleStyle, backgroundColor: "white" }}>
+            <h3>SETTINGS</h3>
+            <ShareLink
+              sessionSettings={sessionSettings}
+              items={items}
+              reveal={reveal}
+            />
+            <Settings
+              sessionSettings={sessionSettings}
+              updateSessionSettings={updateSessionSettings}
+              triggerReveal={() =>
+                Promise.resolve()
+                  .then(() => updateReveal(Date.now()))
+                  .then(() => updateItems([]))
+                  .then(() => updateChallengeRevealed(false))
+              }
+              triggerTimer={() =>
+                updateChallengeRevealed(
+                  sessionSettings.category === initialSettings.category
+                )
+              }
+            />
+          </div>
           <Items
             firstRef={firstRef}
             reveal={reveal}

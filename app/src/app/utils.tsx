@@ -42,3 +42,11 @@ export function getHashSettings(): SettingsType {
 export function stateToHash(state: SettingsType): string {
   return `/#${btoa(JSON.stringify(state))}`;
 }
+
+export const bubbleStyle = {
+  display: "inline-block",
+  borderRadius: "1em",
+  border: "2px solid black",
+  padding: "0.7em",
+  margin: "0.5em",
+};
