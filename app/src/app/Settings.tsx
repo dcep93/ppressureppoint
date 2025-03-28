@@ -81,7 +81,7 @@ export default function Settings(props: {
                   timer_s: parseInt(e.target.value),
                 })
               }
-              style={{ width: "2em" }}
+              style={{ width: "4em" }}
             />
           </div>
           <div style={{ width: "1em" }}></div>
@@ -105,7 +105,7 @@ export default function Settings(props: {
                       )
                   )
                 }
-                style={{ width: "3.5em" }}
+                style={{ width: "4em" }}
               />
             </label>
           </div>
@@ -151,7 +151,7 @@ export default function Settings(props: {
                 .then(clearTimeoutHook)
             }
           >
-            suggest
+            *suggest*
           </button>
         </div>
       </div>
