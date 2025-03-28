@@ -69,7 +69,7 @@ export default function Items(props: {
 
   return (
     <div>
-      <h4>ANSWERS</h4>
+      <h4>TYPE BELOW</h4>
       <div style={{ display: "flex" }}>
         <div>
           {props.items
