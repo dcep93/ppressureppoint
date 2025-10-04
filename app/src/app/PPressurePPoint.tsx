@@ -6,6 +6,12 @@ import Settings from "./Settings";
 import ShareLink from "./ShareLink";
 import { bubbleStyle, getHashSettings } from "./utils";
 
+// todo
+
+// countdown timer
+// dropdown link
+// updating the category and such should invalidate a challenge, which should be visible
+
 console.log(recorded_sha);
 const initialSettings = getHashSettings();
 console.log({ initialSettings });
